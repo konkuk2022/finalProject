@@ -8,12 +8,12 @@
 
 
 ## 파라미터  
- batch_size = 64
- MAX_LEN = 64
- num_epochs = 5
- Learning rage(Adam) = 2e-5
- epsilon(Adam) = 1e-8
- seed_val = 42  <br/><br/>
+#### batch_size = 64
+#### MAX_LEN = 64
+#### num_epochs = 5
+#### Learning rage(Adam) = 2e-5
+#### epsilon(Adam) = 1e-8
+#### seed_val = 42  <br/><br/>
 
 
 
