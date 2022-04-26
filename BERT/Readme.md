@@ -21,4 +21,4 @@
 ## 학습 데이터 정확도 : 0.5 / 테스트 데이터 정확도 0.5
 
 
-### [참고](https://mccormickml.com/2019/07/22/BERT-fine-tuning/)
+## [참고](https://mccormickml.com/2019/07/22/BERT-fine-tuning/)
