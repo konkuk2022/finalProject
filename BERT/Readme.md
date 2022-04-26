@@ -1,6 +1,6 @@
 
-# BERT
-## 내용없음 <br/><br/>
+# BERT 
+## multilingual BERT - 다국의 위키백과 데이터로 학습되어 있다. <br/><br/>
 
 
 ## 학습 데이터 
