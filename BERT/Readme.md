@@ -1,11 +1,9 @@
 
 # BERT
-## 내용 없음  
+## 내용 없음<br/><br/>
 
-
-
-## 학습 데이터  
-
+## 학습 데이터 
+## 내용 없음<br/><br/>
 
 
 ## 파라미터  
@@ -14,7 +12,7 @@
 3. num_epochs = 5
 4. Learning rage(Adam) = 2e-5
 5. epsilon(Adam) = 1e-8
-6. seed_val = 42  
+6. seed_val = 42  <br/><br/>
 
 
 
