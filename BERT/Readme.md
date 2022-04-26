@@ -1,10 +1,10 @@
 
 # BERT 
-## multilingual BERT - 다국의 위키백과 데이터로 학습되어 있다. <br/><br/>
+### multilingual BERT - 다국의 위키백과 데이터로 학습되어 있다. <br/><br/>
 
 
 ## 학습 데이터 
-### [한국어 단발성 대화](https://aihub.or.kr/opendata/keti-data/recognition-laguage/KETI-02-009)<br/><br/>
+#### [한국어 단발성 대화](https://aihub.or.kr/opendata/keti-data/recognition-laguage/KETI-02-009)<br/><br/>
 
 
 ## 파라미터  
