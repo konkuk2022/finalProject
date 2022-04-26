@@ -3,7 +3,9 @@
 ## 내용 없음
 
 
+
 ## 학습 데이터
+
 
 
 ## 파라미터
@@ -13,6 +15,7 @@
 4. Learning rage(Adam) = 2e-5
 5. epsilon(Adam) = 1e-8
 6. seed_val = 42
+
 
 
 ## 학습 결과
