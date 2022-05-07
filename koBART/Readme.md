@@ -36,7 +36,7 @@
 #### MAX_LEN = 12
 #### num_epochs = 5
 #### Learning rage(Adam) = 1e-8
-#### attention_probs_dropout_prob:0.5
+#### attention_probs_dropout_prob = 0.5
 #### hidden_dropout_prob = 0.5
 <br/><br/>
 
