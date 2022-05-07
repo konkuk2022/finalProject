@@ -34,7 +34,7 @@
 ### 파라미터  
 #### batch_size = 128
 #### MAX_LEN = 32
-#### num_epochs = 5
+#### num_epochs = 7
 #### Learning rage(Adam) = 1e-8
 #### attention_probs_dropout_prob = 0.5
 #### hidden_dropout_prob = 0.5
