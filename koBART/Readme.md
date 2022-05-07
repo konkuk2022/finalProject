@@ -1,8 +1,8 @@
 
 
 
-# XLM-Roberta 
-### xlm-roberta-large <br/><br/>
+# koBART 
+### koBART <br/><br/>
 
 - - -
 ## 학습 데이터 
@@ -31,5 +31,3 @@
 ### 학습 데이터 정확도 : 0.5202 / 테스트 데이터 정확도 0.5616<br/><br/>
 - - -
 
-
-## [참고](https://dacon.io/en/competitions/official/235875/codeshare/4539?page=1&dtype=recent)
