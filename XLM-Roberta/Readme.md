@@ -43,7 +43,7 @@
 #### batch_size = 32
 #### MAX_LEN = 32
 #### num_epochs = 7
-#### Learning rage(Adam) = 1e-8
+#### Learning rage(Adam) = 1e-5
 #### attention_probs_dropout_prob = 0.2
 #### hidden_dropout_prob = 0.2
 <br/><br/>
