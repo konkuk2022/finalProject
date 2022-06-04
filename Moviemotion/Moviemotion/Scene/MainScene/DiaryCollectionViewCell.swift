@@ -1,5 +1,5 @@
 //
-//  DiaryTableViewCell.swift
+//  DiaryCollectionViewCell.swift
 //  Moviemotion
 //
 //  Created by Inwoo Park on 2022/06/04.
@@ -7,18 +7,20 @@
 
 import UIKit
 
-class DiaryTableViewCell: UITableViewCell {
+class DiaryCollectionViewCell: UICollectionViewCell {
     static let identifier = "DiaryTableViewCell"
     
     private let dateLabel: UILabel = {
         var label = UILabel()
         label.text = "0000.00.00"
+        label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
     }()
     
     private let contentLabel: UILabel = {
         var label = UILabel()
         label.text = "내용이 들어감"
+        label.font = .systemFont(ofSize: 15, weight: .medium)
         return label
     }()
     
@@ -27,8 +29,8 @@ class DiaryTableViewCell: UITableViewCell {
         setUI()
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setUI()
     }
     

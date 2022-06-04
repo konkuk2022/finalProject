@@ -15,12 +15,13 @@ class MainViewController: UIViewController {
         var textView = UITextView()
         textView.layer.borderWidth = 1
         textView.layer.cornerRadius = 5
+        textView.font = .systemFont(ofSize: 20)
         return textView
     }()
     
     private lazy var completeButton: UIButton = {
         var completeButton = UIButton(type: .system)
-        completeButton.setTitle(" 완료 ", for: .normal)
+        completeButton.setTitle("   완료   ", for: .normal)
         completeButton.tintColor = .black
         completeButton.layer.borderColor = UIColor.black.cgColor
         completeButton.layer.borderWidth = 1
@@ -28,20 +29,22 @@ class MainViewController: UIViewController {
         completeButton.addAction(UIAction { _ in
             let new = Diary(date: Date(), content: self.dairyTextView.text)
             self.dairyTextView.text = ""
-            var now = self.diaryListSubject.value
-            now.append(new)
-            self.diaryListSubject.accept(now)
+            self.viewModel.addNewDiray(new)
         }, for: .touchUpInside)
         return completeButton
     }()
     
-    private let diaryTableView: UITableView = {
-        var tableView = UITableView()
-        tableView.register(DiaryTableViewCell.self, forCellReuseIdentifier: DiaryTableViewCell.identifier)
-        return tableView
+    private let diaryCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 80)
+        var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(DiaryCollectionViewCell.self, forCellWithReuseIdentifier: DiaryCollectionViewCell.identifier)
+        return collectionView
     }()
     
-    private let diaryListSubject = BehaviorRelay(value: [Diary]())
     private let viewModel = MainViewModel()
     private let disposeBag = DisposeBag()
 
@@ -56,32 +59,32 @@ class MainViewController: UIViewController {
         view.addSubview(dairyTextView)
         dairyTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            dairyTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            dairyTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             dairyTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             dairyTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            dairyTextView.heightAnchor.constraint(equalToConstant: 150)
+            dairyTextView.heightAnchor.constraint(equalToConstant: 100)
         ])
         
         view.addSubview(completeButton)
         completeButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             completeButton.topAnchor.constraint(equalTo: dairyTextView.bottomAnchor, constant: 10),
-            completeButton.trailingAnchor.constraint(equalTo: dairyTextView.trailingAnchor)
+            completeButton.trailingAnchor.constraint(equalTo: dairyTextView.trailingAnchor, constant:  -10)
         ])
         
-        view.addSubview(diaryTableView)
-        diaryTableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(diaryCollectionView)
+        diaryCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            diaryTableView.topAnchor.constraint(equalTo: completeButton.bottomAnchor, constant: 10),
-            diaryTableView.leadingAnchor.constraint(equalTo: dairyTextView.leadingAnchor),
-            diaryTableView.trailingAnchor.constraint(equalTo: dairyTextView.trailingAnchor),
-            diaryTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            diaryCollectionView.topAnchor.constraint(equalTo: completeButton.bottomAnchor, constant: 10),
+            diaryCollectionView.leadingAnchor.constraint(equalTo: dairyTextView.leadingAnchor),
+            diaryCollectionView.trailingAnchor.constraint(equalTo: dairyTextView.trailingAnchor),
+            diaryCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
     private func bind() {
-        diaryListSubject
-            .bind(to: diaryTableView.rx.items(cellIdentifier: DiaryTableViewCell.identifier, cellType: DiaryTableViewCell.self)) { (row, element, cell) in
+        viewModel.diaryListSubject
+            .bind(to: diaryCollectionView.rx.items(cellIdentifier: DiaryCollectionViewCell.identifier, cellType: DiaryCollectionViewCell.self)) { (row, element, cell) in
                 cell.configure(date: element.date, content: element.content)
             }
             .disposed(by: disposeBag)
