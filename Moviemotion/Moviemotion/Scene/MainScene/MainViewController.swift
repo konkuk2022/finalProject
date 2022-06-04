@@ -30,6 +30,9 @@ class MainViewController: UIViewController {
             let new = Diary(date: Date(), content: self.dairyTextView.text)
             self.dairyTextView.text = ""
             self.viewModel.addNewDiray(new)
+            let dailyViewController = DailyViewController()
+            dailyViewController.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(dailyViewController, animated: true)
         }, for: .touchUpInside)
         return completeButton
     }()
