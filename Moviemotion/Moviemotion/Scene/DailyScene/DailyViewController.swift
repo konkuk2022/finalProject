@@ -9,9 +9,6 @@ import UIKit
 
 final class DailyViewController: UITabBarController {
     
-    private var registerButton = UIButton()
-    private var prevIndex = Int.zero
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.backgroundColor = .systemBackground

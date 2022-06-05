@@ -8,7 +8,8 @@
 import UIKit
 
 class DiaryCollectionViewCell: UICollectionViewCell {
-    static let identifier = "DiaryTableViewCell"
+    
+    static let identifier = "DiaryCollectionViewCell"
     
     private let dateLabel: UILabel = {
         var label = UILabel()

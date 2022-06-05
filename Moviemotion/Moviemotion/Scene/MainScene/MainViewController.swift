@@ -11,9 +11,10 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: UIViewController {
+    
     private let dairyTextView: UITextView = {
         var textView = UITextView()
-        textView.layer.borderWidth = 1
+        textView.layer.borderWidth = 0.5
         textView.layer.cornerRadius = 5
         textView.font = .systemFont(ofSize: 20)
         return textView
@@ -58,7 +59,7 @@ class MainViewController: UIViewController {
     }
     
     private func setUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubview(dairyTextView)
         dairyTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
