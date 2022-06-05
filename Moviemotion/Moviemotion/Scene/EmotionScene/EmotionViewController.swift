@@ -79,7 +79,7 @@ class EmotionViewController: UIViewController {
                 var color = UIColor.black
                 switch element.kind {
                 case .happy:
-                    color = .systemPink
+                    color = .systemYellow
                 case .sad:
                     color = .systemBlue
                 case .surprise:

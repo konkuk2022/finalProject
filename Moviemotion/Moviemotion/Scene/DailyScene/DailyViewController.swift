@@ -20,6 +20,7 @@ final class DailyViewController: UITabBarController {
         self.configureTab(controller: emotion, title: "감정", imageName: "face.smiling", selectedImageName: "face.smiling.fill")
         self.configureTab(controller: movie, title: "영화", imageName: "film", selectedImageName: "film.fill")
         emotion.configure(diary: diary)
+        movie.configure(diary: diary)
         self.viewControllers = [emotion, movie]
     }
     

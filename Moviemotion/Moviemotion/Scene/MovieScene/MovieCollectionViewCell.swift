@@ -48,7 +48,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 5
         label.textAlignment = .natural
-        label.text = "이것은 줄거리이다.이것은 줄거리이다.이것은 줄거리이다.이것은 줄거리이다.이것은 줄거리이다.이것은 줄거리이다.이것은 줄거리이다.이것은 줄거리이다.이것은 줄거리이다.이것은 줄거리이다."
+        label.text = "이것은 줄거리이다."
         label.font = .systemFont(ofSize: 14, weight: .light)
         return label
     }()

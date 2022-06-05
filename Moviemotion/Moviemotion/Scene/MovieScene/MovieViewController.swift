@@ -87,5 +87,15 @@ class MovieViewController: UIViewController {
             }
             .disposed(by: disposeBag)
     }
-
+    
+    func configure(diary: Diary) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        let dateString = formatter.string(from: diary.date)
+        dateLabel.text = dateString
+        guard let highestEmotion = diary.emotionState.max(by: {$0.percentage < $1.percentage}) else {
+            return
+        }
+        commentLabel.text = "이 날은 \(highestEmotion.kind.rawValue)의 날이었네요!"
+    }
 }
