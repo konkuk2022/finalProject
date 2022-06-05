@@ -31,8 +31,9 @@ class MovieCollectionViewCell: UICollectionViewCell {
         let range = (fullText as NSString).range(of: "2022")
         let attributedString = NSMutableAttributedString(string: fullText)
         attributedString.addAttribute(.font, value: font, range: range)
-        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.font = .systemFont(ofSize: 25, weight: .bold)
         label.attributedText = attributedString
+        label.numberOfLines = 0
         return label
     }()
     
@@ -93,7 +94,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
         let range = (fullText as NSString).range(of: " \(movie.year)")
         let attributedString = NSMutableAttributedString(string: fullText)
         attributedString.addAttribute(.font, value: font, range: range)
-        titleLabel.font = .systemFont(ofSize: 30, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: 25, weight: .bold)
         titleLabel.attributedText = attributedString
         
         genreLabel.text = movie.genre.joined(separator: " / ")
