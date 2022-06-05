@@ -21,8 +21,14 @@ class DiaryCollectionViewCell: UICollectionViewCell {
     private let contentLabel: UILabel = {
         var label = UILabel()
         label.text = "내용이 들어감"
-        label.font = .systemFont(ofSize: 15, weight: .medium)
+        label.font = .systemFont(ofSize: 15)
         return label
+    }()
+    
+    private let lineView: UIView = {
+        var view = UIView()
+        view.backgroundColor = .systemGray
+        return view
     }()
     
     required init?(coder: NSCoder) {
@@ -36,14 +42,10 @@ class DiaryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setUI() {
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.black.cgColor
-        self.layer.cornerRadius = 5
-        
         contentView.addSubview(dateLabel)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            dateLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            dateLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10)
         ])
         
@@ -52,8 +54,17 @@ class DiaryCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             contentLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
             contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
+        ])
+        
+        contentView.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            lineView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: 15),
+            lineView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            lineView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            lineView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            lineView.heightAnchor.constraint(equalToConstant: 1)
         ])
     }
     

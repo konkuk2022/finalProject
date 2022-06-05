@@ -74,16 +74,16 @@ class EmotionCollectionViewCell: UICollectionViewCell {
         nameLabel.text = name
         percentageLabel.text = "\(round(percentage*100)) %"
         percentageView.backgroundColor = color
-        animationBar(now: 0.0, goal: percentage)
+        barAnimate(now: 0.0, goal: percentage)
     }
     
-    func animationBar(now: Float, goal: Float) {
+    func barAnimate(now: Float, goal: Float) {
         UIView.animate(withDuration: 0.01, animations: {
             self.percentageWidthConstraint.constant = self.contentView.frame.width * CGFloat(now)
             self.layoutIfNeeded()
         }) { _ in
             if now < goal {
-                self.animationBar(now: now+goal/50, goal: goal)
+                self.barAnimate(now: now+goal/50, goal: goal)
             }
         }
     }

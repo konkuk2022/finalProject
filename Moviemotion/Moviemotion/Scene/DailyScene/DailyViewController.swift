@@ -12,18 +12,14 @@ final class DailyViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.backgroundColor = .systemBackground
-        self.configure()
     }
     
-    private func configure() {
-        self.configureTabBarItems()
-    }
-    
-    private func configureTabBarItems() {
+    func configure(diary: Diary) {
         let emotion = EmotionViewController()
         let movie = MovieViewController()
         self.configureTab(controller: emotion, title: "감정", imageName: "face.smiling", selectedImageName: "face.smiling.fill")
         self.configureTab(controller: movie, title: "영화", imageName: "film", selectedImageName: "film.fill")
+        emotion.configure(diary: diary)
         self.viewControllers = [emotion, movie]
     }
     

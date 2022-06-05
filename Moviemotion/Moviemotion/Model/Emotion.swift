@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Emotion {
+struct Emotion: Hashable {
     let kind: EmotionKind
     var percentage: Float
 }
