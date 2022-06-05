@@ -28,6 +28,7 @@
 		8AF5E26C284B4F19005DFCE5 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 8AF5E26B284B4F19005DFCE5 /* RxRelay */; };
 		8AF5E26E284B4F19005DFCE5 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8AF5E26D284B4F19005DFCE5 /* RxSwift */; };
 		8AF5E270284BB8C1005DFCE5 /* EmotionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5E26F284BB8C1005DFCE5 /* EmotionCollectionViewCell.swift */; };
+		8AF5E272284CC2B9005DFCE5 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF5E271284CC2B9005DFCE5 /* MovieCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		8A8C8BA0282D1ED80015BA4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AF5E266284B46E2005DFCE5 /* DiaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		8AF5E26F284BB8C1005DFCE5 /* EmotionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionCollectionViewCell.swift; sourceTree = "<group>"; };
+		8AF5E271284CC2B9005DFCE5 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			children = (
 				8A5881E0282D23AC005747C4 /* MovieViewController.swift */,
 				8A5881E8282D242E005747C4 /* MovieViewModel.swift */,
+				8AF5E271284CC2B9005DFCE5 /* MovieCollectionViewCell.swift */,
 			);
 			path = MovieScene;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AF5E272284CC2B9005DFCE5 /* MovieCollectionViewCell.swift in Sources */,
 				8A5881F6282D27DE005747C4 /* Movie.swift in Sources */,
 				8A5881EB282D2437005747C4 /* EmotionViewModel.swift in Sources */,
 				8A5881E5282D241A005747C4 /* MainViewModel.swift in Sources */,

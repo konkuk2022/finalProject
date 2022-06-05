@@ -8,5 +8,9 @@
 import Foundation
 
 struct Movie {
-    
+    let title: String
+    let year: Int
+    let genre: [String]
+    let summary: String
+    let imageUrl: String
 }
