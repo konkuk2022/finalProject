@@ -65,8 +65,8 @@ class EmotionCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(percentageLabel)
         percentageLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            percentageLabel.leadingAnchor.constraint(equalTo: percentageView.trailingAnchor, constant: 10),
-            percentageLabel.centerYAnchor.constraint(equalTo: percentageView.centerYAnchor)
+            percentageLabel.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10),
+            percentageLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor)
         ])
     }
     

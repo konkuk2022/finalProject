@@ -12,7 +12,7 @@ struct Diary: Hashable {
         return lhs.uuid == rhs.uuid
     }
     
-    var emotion: [Emotion]
+    var emotionState: [Emotion]
     let uuid: UUID = UUID()
     let date: Date
     let content: String

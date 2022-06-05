@@ -30,15 +30,7 @@ class MainViewController: UIViewController {
         completeButton.tintColor = .white
         completeButton.layer.cornerRadius = 5
         completeButton.addAction(UIAction { _ in
-            let new = Diary(emotion: [
-                Emotion(kind: .happy, percentage: 0.6),
-                Emotion(kind: .aversion, percentage: 0.1),
-                Emotion(kind: .fear, percentage: 0.05),
-                Emotion(kind: .angry, percentage: 0.05),
-                Emotion(kind: .surprise, percentage: 0.1),
-                Emotion(kind: .sad, percentage: 0.05),
-                Emotion(kind: .neutral, percentage: 0.1)
-            ], date: Date(), content: self.dairyTextView.text)
+            let new = Diary(emotionState: Emotion.randomEmotionState(), date: Date(), content: self.dairyTextView.text)
             self.dairyTextView.text = ""
             self.viewModel.addNewDiray(new)
         }, for: .touchUpInside)
