@@ -41,7 +41,8 @@ def test(model, test_dataloader, config):
             y_batch = test_input["labels"].to(config.device)
             mask = test_input["attention_mask"].to(config.device)
             input_id = test_input["input_ids"].squeeze(1).to(config.device)
-            y_pred = model(input_id, mask)
+            sep_idx = torch.where(input_id == 3)
+            y_pred = model(input_id, mask, sep_idx)
             loss = loss_function(y_pred, y_batch)
             test_loss += loss.item()
 
