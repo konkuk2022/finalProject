@@ -69,3 +69,32 @@ def one_hot_encoder(dataset, n_labels=44):
     for idx in label_idx:
         one_hot[int(idx)] = 1
     return torch.LongTensor(one_hot)
+
+def f1_score_micro(y_true, y_pred,batch_size):
+    TP = [0]*44
+    FP = [0]*44
+    FN = [0]*44
+    
+    for batch in range(batch_size):
+        for (i,p) in enumerate(y_pred[batch]):
+            TP[i] = (p * y_true[batch][i])
+            if p == 1:
+                FP[i] = p - y_true[batch][i]
+            else:
+                FP[i] = 0
+
+            if y_true[batch][i] == 1:
+                FN[i] = y_true[batch][i] - p
+            else:
+                FN[i] = 0
+    precision = [0] * 44
+    recall = [0] * 44
+    for i in range(len(TP)):
+        precision[i] = TP[i]/(TP[i] + FP[i] + 1e-7)
+        recall[i] = TP[i]/(TP[i] + FN[i] + 1e-7)
+    
+    f1_score = [0] * 44
+    for i in range(len(precision)):
+            f1_score[i] = (2.0 * precision[i] * recall[i]) / (precision[i] + recall[i] + 1e-7)
+
+    return f1_score
