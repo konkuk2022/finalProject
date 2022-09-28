@@ -34,8 +34,8 @@ if __name__ == "__main__":
 
     config = args.parse_args()
     
-
     set_seed(42)
+    
     print("---prepare dataset---")
     train_dataset = ELECTRALSTMDataset("/train_data.pkl", config)
     valid_dataset = ELECTRALSTMDataset("/val_data.pkl", config)
@@ -61,7 +61,15 @@ if __name__ == "__main__":
 
         train_loss= train(model, train_dataloader, scheduler, optimizer, config)
         valid_loss, labels, preds = test(model, valid_dataloader, config)
-
+        
+        preds = torch.stack(preds)
+        preds = preds.cpu().detach().numpy()
+        preds = torch.sigmoid(preds)
+        preds = np.where(preds > config.threshold, 1, 0)
+        
+        labels = torch.stack(labels)
+        labels = labels.cpu().detach().numpy()
+        
         auc_score = log_metrics(preds, labels)["auc_micro"]
         classification_report = log_metrics(preds, labels, config)["classification_report"]
         
@@ -82,8 +90,10 @@ if __name__ == "__main__":
             best_val_loss = avg_val_loss
             torch.save(model.state_dict(), "./best_model.pt")
             print(f"Model saved as current valid loss: {best_val_loss}")
+            
     test_loss, labels, preds = test(model, test_dataloader, config)
     avg_test_loss = test_loss / len(test_dataloader)
+    
     auc_score = log_metrics(preds, labels)["auc_micro"]
     classification_report = log_metrics(preds, labels, config)["classification_report"]
     
