@@ -63,8 +63,8 @@ if __name__ == "__main__":
         valid_loss, labels, preds = test(model, valid_dataloader, config)
         
         preds = torch.stack(preds)
-        preds = preds.cpu().detach().numpy()
         preds = torch.sigmoid(preds)
+        preds = preds.cpu().detach().numpy()
         preds = np.where(preds > config.threshold, 1, 0)
         
         labels = torch.stack(labels)
