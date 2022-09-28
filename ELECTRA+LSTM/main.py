@@ -30,6 +30,7 @@ if __name__ == "__main__":
     args.add_argument("--n_epochs", type=int, default=20)
     args.add_argument("--lr", type=float, default=1e-5)
     args.add_argument("--device", type=str, default=device)
+    args.add_argument("--threshold", type=float, default=0.3)
 
     config = args.parse_args()
     
@@ -62,12 +63,15 @@ if __name__ == "__main__":
         valid_loss, labels, preds = test(model, valid_dataloader, config)
 
         auc_score = log_metrics(preds, labels)["auc_micro"]
+        classification_report = log_metrics(preds, labels, config)["classification_report"]
+        
         avg_train_loss, avg_val_loss = train_loss / len(train_dataloader), valid_loss / len(test_dataloader)
 
         print(f"[{epoch+1}/{config.n_epochs}]")
         print(f"AUC score: {auc_score}")
         print(f"Average Train Loss: {avg_train_loss}")
         print(f"Average Valid Loss: {avg_val_loss}")
+        print(classification_report)
         print("\n")
 
         early_stopping(avg_val_loss)
@@ -81,8 +85,9 @@ if __name__ == "__main__":
     test_loss, labels, preds = test(model, test_dataloader, config)
     avg_test_loss = test_loss / len(test_dataloader)
     auc_score = log_metrics(preds, labels)["auc_micro"]
-    # f1_score = log_metrics(preds, labels)["f1_macro"]
+    classification_report = log_metrics(preds, labels, config)["classification_report"]
+    
     print("<test result>")
     print(f"AUC score: {auc_score}")
-    # print(f"F1 score: {f1_score}")
     print(f"Test Loss: {avg_test_loss}")
+    print(classification_report)
