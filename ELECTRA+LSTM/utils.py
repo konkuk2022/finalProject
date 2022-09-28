@@ -77,14 +77,14 @@ def f1_score_micro(y_true, y_pred,batch_size):
     
     for batch in range(batch_size):
         for (i,p) in enumerate(y_pred[batch]):
-            TP[i] = (p * y_true[batch][i])
+            TP[i] += (p * y_true[batch][i])
             if p == 1:
-                FP[i] = p - y_true[batch][i]
+                FP[i] += p - y_true[batch][i]
             else:
                 FP[i] = 0
 
             if y_true[batch][i] == 1:
-                FN[i] = y_true[batch][i] - p
+                FN[i] += y_true[batch][i] - p
             else:
                 FN[i] = 0
     precision = [0] * 44
