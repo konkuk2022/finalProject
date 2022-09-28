@@ -45,14 +45,8 @@ class EarlyStopping:
                 print("Early Stopping")
                 self.early_stop = True
 
-def log_metrics(preds, labels, config):
-    preds = torch.stack(preds)
-    preds = preds.cpu().detach().numpy()
-    preds = np.where(preds > config.threshold, 1, 0)
-    
-    labels = torch.stack(labels)
-    labels = labels.cpu().detach().numpy()
-    
+def log_metrics(preds, labels):
+
     fpr_micro, tpr_micro, _ = metrics.roc_curve(labels.ravel(), preds.ravel())
     auc_micro = metrics.auc(fpr_micro, tpr_micro)
     
