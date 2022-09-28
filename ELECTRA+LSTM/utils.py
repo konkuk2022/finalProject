@@ -70,10 +70,22 @@ def one_hot_encoder(dataset, n_labels=44):
         one_hot[int(idx)] = 1
     return torch.LongTensor(one_hot)
 
+def to_binary(y_pred,threshold=0.3):
+    new_pred = y_pred
+    for (batch,pred) in enumerate(y_pred):
+        for (i,y) in enumerate(pred):
+            if y >= threshold
+                new_pred[batch][i] = 1
+            else:
+                new_pred[batch][i] = 0
+    return new_pred
+
+
 def f1_score_micro(y_true, y_pred,batch_size):
     TP = [0]*44
     FP = [0]*44
     FN = [0]*44
+    y_pred = to_binary(y_pred)
     
     for batch in range(batch_size):
         for (i,p) in enumerate(y_pred[batch]):
