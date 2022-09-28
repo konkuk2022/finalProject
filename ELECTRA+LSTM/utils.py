@@ -45,18 +45,20 @@ class EarlyStopping:
                 print("Early Stopping")
                 self.early_stop = True
 
-def log_metrics(preds, labels):
+def log_metrics(preds, labels, config):
     preds = torch.stack(preds)
     preds = preds.cpu().detach().numpy()
+    preds = np.where(preds > config.threshold, 1, 0)
+    
     labels = torch.stack(labels)
     labels = labels.cpu().detach().numpy()
     
     fpr_micro, tpr_micro, _ = metrics.roc_curve(labels.ravel(), preds.ravel())
     auc_micro = metrics.auc(fpr_micro, tpr_micro)
-    # f1_macro = metrics.f1_score(labels, preds)
     
-    # return {"auc_micro": auc_micro, "f1_macro": f1_macro}
-    return {"auc_micro": auc_micro}
+    classification_report = metrics.classification_report(labels, preds, zero_division=0)
+
+    return {"auc_micro": auc_micro, "classification_report": classification_report}
 
 def loss_function(outputs, labels):
     if labels is None:
@@ -70,43 +72,3 @@ def one_hot_encoder(dataset, n_labels=44):
         one_hot[int(idx)] = 1
     return torch.LongTensor(one_hot)
 
-def to_binary(y_pred,threshold=0.3):
-    new_pred = y_pred
-    for (batch,pred) in enumerate(y_pred):
-        for (i,y) in enumerate(pred):
-            if y >= threshold
-                new_pred[batch][i] = 1
-            else:
-                new_pred[batch][i] = 0
-    return new_pred
-
-
-def f1_score_micro(y_true, y_pred,batch_size):
-    TP = [0]*44
-    FP = [0]*44
-    FN = [0]*44
-    y_pred = to_binary(y_pred)
-    
-    for batch in range(batch_size):
-        for (i,p) in enumerate(y_pred[batch]):
-            TP[i] += (p * y_true[batch][i])
-            if p == 1:
-                FP[i] += p - y_true[batch][i]
-            else:
-                FP[i] = 0
-
-            if y_true[batch][i] == 1:
-                FN[i] += y_true[batch][i] - p
-            else:
-                FN[i] = 0
-    precision = [0] * 44
-    recall = [0] * 44
-    for i in range(len(TP)):
-        precision[i] = TP[i]/(TP[i] + FP[i] + 1e-7)
-        recall[i] = TP[i]/(TP[i] + FN[i] + 1e-7)
-    
-    f1_score = [0] * 44
-    for i in range(len(precision)):
-            f1_score[i] = (2.0 * precision[i] * recall[i]) / (precision[i] + recall[i] + 1e-7)
-
-    return f1_score
