@@ -31,6 +31,7 @@ if __name__ == "__main__":
     args.add_argument("--lr", type=float, default=1e-5)
     args.add_argument("--device", type=str, default=device)
     args.add_argument("--threshold", type=float, default=0.3)
+    args.add_argument("--early_stopping_patience", type=int, default=3)
 
     config = args.parse_args()
     
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     optimizer = AdamW(model.parameters(), lr=config.lr)
     scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=2500, num_training_steps = 12500)
 
-    early_stopping = EarlyStopping(patience=10, min_delta=0)
+    early_stopping = EarlyStopping(patience=config.early_stopping_patience, min_delta=0)
     best_val_loss = 1000
 
     print("---training start---")
