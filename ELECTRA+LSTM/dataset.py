@@ -15,6 +15,7 @@ class ELECTRALSTMDataset(Dataset):
         self.text = data.new_text.values
         data.label = data.label.map(lambda x: x.split(","))
         self.labels = data.label.values.tolist()
+        self.labels = [one_hot_encoder(label) for label in self.labels]
         self.max_length = config.max_length
 
     def __len__(self):
@@ -29,8 +30,6 @@ class ELECTRALSTMDataset(Dataset):
                                             return_token_type_ids=False,
                                             return_attention_mask=True,
                                             add_special_tokens=True)
-
-        self.labels[idx] = one_hot_encoder(self.labels[idx])
 
         return {"input_ids": torch.LongTensor(embeddings["input_ids"]), 
                 "attention_mask": torch.LongTensor(embeddings["attention_mask"]), 
