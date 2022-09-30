@@ -32,6 +32,7 @@ if __name__ == "__main__":
     args.add_argument("--device", type=str, default=device)
     args.add_argument("--threshold", type=float, default=0.3)
     args.add_argument("--early_stopping_patience", type=int, default=3)
+    args.add_argument("--resume_from")
 
     config = args.parse_args()
     
@@ -47,13 +48,28 @@ if __name__ == "__main__":
     test_dataloader = DataLoader(test_dataset, batch_size=config.batch_size, shuffle=False)
     print("---dataset is ready!---")
     
-    model = ELECTRALSTMClassification(config).to(device)
+    if args.resume_from:
+        model_data = torch.load(args.resume_from)
 
-    optimizer = AdamW(model.parameters(), lr=config.lr)
-    scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=2500, num_training_steps = 12500)
+        model = ELECTRALSTMClassification(config).to(device)
+        model.load_state_dict(model_data["model_state_dict"])
+
+        optimizer = AdamW(model.parameters(), lr=config.lr)
+        optimizer.load_state_dict(model_data["optimizer_state_dict"])
+
+        scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=2500, num_training_steps = 12500)
+        scheduler.load_state_dict(model_data["scheduler_state_dict"])
+
+        start_epoch = config.n_epochs - model_data["epoch"]
+
+    else:
+        model = ELECTRALSTMClassification(config).to(device)
+
+        optimizer = AdamW(model.parameters(), lr=config.lr)
+        scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=2500, num_training_steps = 12500)
+        start_epoch = 0
 
     early_stopping = EarlyStopping(patience=config.early_stopping_patience, min_delta=0)
-    best_val_loss = 1000
 
     print("---training start---")
     for epoch in range(config.n_epochs):
@@ -86,11 +102,11 @@ if __name__ == "__main__":
         early_stopping(avg_val_loss)
         if early_stopping.early_stop:
             break
-
-        if avg_val_loss < best_val_loss:
-            best_val_loss = avg_val_loss
-            torch.save(model.state_dict(), "./best_model.pt")
-            print(f"Model saved as current valid loss: {best_val_loss}")
+            
+        torch.save({"epoch": epoch, "optimizer_state_dict": optimizer.state_dict(), 
+                        "scheduler_state_dict": scheduler.state_dict, "model_state_dict": model.state_dict()}, 
+                        f"model.{epoch}.pth")
+        print(f"model saved")
             
     test_loss, labels, preds = test(model, test_dataloader, config)
     avg_test_loss = test_loss / len(test_dataloader)
@@ -102,3 +118,5 @@ if __name__ == "__main__":
     print(f"AUC score: {auc_score}")
     print(f"Test Loss: {avg_test_loss}")
     print(classification_report)
+    
+    torch.save(model.state_dict(), "final_model.pth")
