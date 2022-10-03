@@ -48,7 +48,7 @@ if __name__ == "__main__":
     test_dataloader = DataLoader(test_dataset, batch_size=config.batch_size, shuffle=False)
     print("---dataset is ready!---")
     
-    if args.resume_from:
+    if config.resume_from:
         model_data = torch.load(args.resume_from)
 
         model = ELECTRALSTMClassification(config).to(device)
