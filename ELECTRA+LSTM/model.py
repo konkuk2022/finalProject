@@ -11,12 +11,14 @@ class ELECTRALSTMClassification(nn.Module):
         self.config = AutoConfig.from_pretrained("beomi/KcELECTRA-base",
                                                     problem_type="multi_label_classification",
                                                     num_labels = config.num_labels) 
+        
+        self.embedding_size = config.embedding_size
+        self.batch_size = config.batch_size
 
         self.electra = AutoModel.from_pretrained("beomi/KcELECTRA-base", config=self.config).to(self.device)
         self.lstm = nn.LSTM(self.embedding_size, self.embedding_size, batch_first=True, bidirectional=True).to(self.device)
         self.fc = nn.Linear(config.embedding_size * 5, config.num_labels)
-        self.embedding_size = config.embedding_size
-        self.batch_size = config.batch_size
+        
 
     def forward(self, input_ids=None, attention_mask=None, sep_idx=None):
         
