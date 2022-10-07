@@ -88,7 +88,7 @@ if __name__ == "__main__":
         labels = labels.cpu().detach().numpy()
         
         auc_score = log_metrics(preds, labels)["auc_micro"]
-        classification_report = log_metrics(preds, labels, config)["classification_report"]
+        classification_report = log_metrics(preds, labels)["classification_report"]
         
         avg_train_loss, avg_val_loss = train_loss / len(train_dataloader), valid_loss / len(test_dataloader)
 
