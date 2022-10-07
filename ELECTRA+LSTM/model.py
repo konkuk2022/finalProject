@@ -13,6 +13,7 @@ class ELECTRALSTMClassification(nn.Module):
                                                     num_labels = config.num_labels) 
 
         self.electra = AutoModel.from_pretrained("beomi/KcELECTRA-base", config=self.config).to(self.device)
+        self.lstm = nn.LSTM(self.embedding_size, self.embedding_size, batch_first=True, bidirectional=True).to(self.device)
         self.fc = nn.Linear(config.embedding_size * 5, config.num_labels)
         self.embedding_size = config.embedding_size
         self.batch_size = config.batch_size
@@ -31,8 +32,7 @@ class ELECTRALSTMClassification(nn.Module):
         longest = torch.where(sep_idx_x==torch.mode(sep_idx_x).values)[0].size()[0]
         # 초기화
         sep_embeddings = torch.zeros(self.batch_size, longest, self.embedding_size).to(self.device)
-
-        lstm = nn.LSTM(self.embedding_size, self.embedding_size, batch_first=True, bidirectional=True).to(self.device)
+        
         # embedding 값 집어넣어주기
         for x, y in zip(sep_idx_x, sep_idx_y):
             if idx == x:
@@ -47,7 +47,7 @@ class ELECTRALSTMClassification(nn.Module):
         input_lengths = sep_idx_x.unique(return_counts=True)[1].tolist()
 
         # lstm 실행
-        lstm_output, (h, c) = lstm(sep_embeddings) # (batch_size, seq_length, embedding_size)
+        lstm_output, (h, c) = self.lstm(sep_embeddings) # (batch_size, seq_length, embedding_size)
 
         # lstm 처음과 끝 가져오기 ## 문제 여기 (cls 사이즈 4, 768. 이에 맞게 가져와야 함 bi-lstm 이해 안돼서 그런듯)
         sep_first = lstm_output[:, 0, :]
