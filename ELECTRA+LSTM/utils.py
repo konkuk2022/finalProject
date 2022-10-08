@@ -63,9 +63,9 @@ def loss_function2(outputs, labels):
     # outputs, label 구성이 outputs[0] = cls, outputs[1] = 1st_sep, outputs[2] = end_sep로 되어있다고 가정하고 코드 작성
     bce_loss = nn.BCEWithLogitsLoss(reduction='sum')
     
-    loss0 = bec_loss(outputs[0],labels[0])
-    loss1 = bec_loss(outputs[1],labels[1])
-    loss2 = bec_loss(outputs[2],labels[2])
+    loss0 = bce_loss(outputs[0],labels[0])
+    loss1 = bce_loss(outputs[1],labels[1])
+    loss2 = bce_loss(outputs[2],labels[2])
     
     return loss0+loss1+loss2
 
