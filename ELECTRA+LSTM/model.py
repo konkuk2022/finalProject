@@ -33,7 +33,7 @@ class ELECTRALSTMClassification(nn.Module):
         cnt = 0
         longest = torch.where(sep_idx_x==torch.mode(sep_idx_x).values)[0].size()[0]
         # 초기화
-        sep_embeddings = torch.zeros(self.batch_size, longest, self.embedding_size).to(self.device)
+        sep_embeddings = torch.zeros(cls.size(0), longest, self.embedding_size).to(self.device)
         
         # embedding 값 집어넣어주기
         for x, y in zip(sep_idx_x, sep_idx_y):
