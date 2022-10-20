@@ -46,12 +46,11 @@ class EarlyStopping:
                 self.early_stop = True
 
 def log_metrics(preds, labels):
-
     fpr_micro, tpr_micro, _ = metrics.roc_curve(labels.ravel(), preds.ravel())
     auc_micro = metrics.auc(fpr_micro, tpr_micro)
     
     classification_report = metrics.classification_report(labels, preds, zero_division=0)
-
+    
     return {"auc_micro": auc_micro, "classification_report": classification_report}
 
 def loss_function(outputs, labels):
@@ -61,11 +60,11 @@ def loss_function(outputs, labels):
 
 def loss_function2(outputs, labels):
     # outputs, label 구성이 outputs[0] = cls, outputs[1] = 1st_sep, outputs[2] = end_sep로 되어있다고 가정하고 코드 작성
-    bce_loss = nn.BCEWithLogitsLoss(reduction='sum')
+    bce_loss = nn.BCEWithLogitsLoss()
     
-    loss0 = bce_loss(outputs[0],labels[0])
-    loss1 = bce_loss(outputs[1],labels[1])
-    loss2 = bce_loss(outputs[2],labels[2])
+    loss0 = bce_loss(outputs[0],labels[0].float())
+    loss1 = bce_loss(outputs[1],labels[1].float())
+    loss2 = bce_loss(outputs[2],labels[2].float())
     
     return loss0+loss1+loss2
 
@@ -76,3 +75,16 @@ def one_hot_encoder(dataset, n_labels=44):
         one_hot[int(idx)] = 1
     return torch.LongTensor(one_hot)
 
+def compute_metrics(preds, labels, config):
+    preds = torch.stack(preds)
+    preds = torch.sigmoid(preds)
+    preds = preds.cpu().detach().numpy()
+    preds = np.where(preds > config.threshold, 1, 0)
+        
+    labels = torch.stack(labels)
+    labels = labels.cpu().detach().numpy()
+        
+    auc_score = log_metrics(preds, labels)["auc_micro"]
+    classification_report = log_metrics(preds, labels)["classification_report"]
+
+    return auc_score, classification_report
