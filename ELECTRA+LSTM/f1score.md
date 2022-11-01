@@ -332,7 +332,7 @@ weighted avg       0.65      0.80      0.71     44412
  ```
  ## 2022.11.1 batch size 32 scheduler CosineAnnealing
 모델 학습 현재 진행중<br/>
-auc 0.8017517885818805 at val_loss 0.5430061560907181
+auc 0.8017517885818805 at val_loss 0.5430061560907181, epoch 24
 ### full sentence
 ```
  ---------- CLS ----------
