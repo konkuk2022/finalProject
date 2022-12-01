@@ -4,8 +4,7 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-from torch.optim import AdamW
-from transformers import get_linear_schedule_with_warmup
+from torch.optim import AdamW, lr_scheduler
 
 
 import argparse
@@ -57,7 +56,7 @@ if __name__ == "__main__":
         optimizer = AdamW(model.parameters(), lr=config.lr)
         optimizer.load_state_dict(model_data["optimizer_state_dict"])
 
-        scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=2500, num_training_steps = 12500)
+        scheduler = lr_scheduler.CosineAnnealingLR(optimizer, T_max=50, eta_min=0, verbose=False)
         scheduler.load_state_dict(model_data["scheduler_state_dict"])
 
         start_epoch = config.n_epochs - model_data["epoch"]
@@ -66,7 +65,7 @@ if __name__ == "__main__":
         model = ELECTRALSTMClassification(config).to(device)
 
         optimizer = AdamW(model.parameters(), lr=config.lr)
-        scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=2500, num_training_steps = 12500)
+        scheduler = lr_scheduler.CosineAnnealingLR(optimizer, T_max=50, eta_min=0, verbose=False)
         start_epoch = 0
 
     early_stopping = EarlyStopping(patience=config.early_stopping_patience, min_delta=0)
