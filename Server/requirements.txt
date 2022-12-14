@@ -1,0 +1,6 @@
+transformers
+torch
+pytorch_lightning
+pandas
+kss
+gdown
